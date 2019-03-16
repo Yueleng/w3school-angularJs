@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js">
+</script>
+<body>
+    
+
+<div ng-app="" 
+    ng-init="myCol='lightblue'; quantity=1; cost=5;firstName='John';lastName='Doe';
+             person={firsName:'Alan', lastName:'Wang'}; points=[1,15,19,2,40]">
+    <p>My first expression: {{5 + 5}}</p>
+
+    <hr>
+
+    <p>Without the ng-app directive, HTML will display the expression as it is, without solving it.</p>
+
+    <hr>
+
+    <input style="background-color: {{myCol}}" ng-model="myCol">
+    <p>AngularJS resolves the expression and returns the result.</p>
+    <p>The background color of the input box will be whatever you write in the input field.</p>
+
+    <hr>
+
+    <p>Total in dollar: {{ quantity * cost }}</p>
+    <p>Same example using <code>ng-bind</code></p>
+    <p>Total in dollar: <span ng-bind="quantity * cost"></span></p>
+    <p>Using <code>ng-init</code> is not very common. You will learn a better way to initialize data in the chapter about controllers.</p>
+
+    <hr>
+
+    <p>The name is <span ng-bind="firstName + ' ' + lastName"></span></p>
+
+    <hr>
+
+    <p>The name is {{ person.lastName }}</p>
+    <p>The same example using <code>ng-bind</code></p>
+    <p>The name is <span ng-bind="person.lastName"></span></p>
+
+    <hr>
+
+    <p>The third result is {{points[2]}}</p>
+    <p>Same example using <code>ng-bind</code></p>
+
+    <hr>
+    <p>AngularJS Expressions vs. JavaScript Expressions</p>
+
+    <p>Like JavaScript expressions, AngularJS expressions can contain literals, operators, and variables.</p>
+            
+    <p>Unlike JavaScript expressions, AngularJS expressions can be written inside HTML.</p>
+            
+    <p>AngularJS expressions do not support conditionals, loops, and exceptions, while JavaScript expressions do.</p>
+            
+    <p>AngularJS expressions support filters, while JavaScript expressions do not.</p>
+</div>
+
+
+    
+</div>
+</body>
+</html>
