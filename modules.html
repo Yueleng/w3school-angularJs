@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js">
+</script>
+
+<body>
+
+<div ng-app="myApp" ng-controller="myCtrl">
+    <p>{{firstName + '' + lastName}}</p>
+    <p>The [] parameter in the module definition can be used to define dependent modules.</p>
+    
+    <p>Without the [] parameter, you are not creating a new module, but retrieving an existing one.</p>
+    <div w3-test-directive></div>
+
+</div>
+
+<script>
+var app = angular.module("myApp", []);
+app.controller("myCtrl", function($scope){
+    $scope.firstName = "Alan";
+    $scope.lastName = "Wang";
+});
+app.directive("w3TestDirective", function(){
+    return {
+        template : "I was made in a directive constructor!"
+    };
+})
+</script>
+
+</body>
+
+</html>

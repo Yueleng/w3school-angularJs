@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js">
+</script>
+
+<body>
+    <div ng-app="myApp" ng-controller="personCtrl">
+        <p>The last name is {{lastName | uppercase}}</p>
+        <p>The first name is {{firstName | lowercase}} </p>
+        <p>Looping with objects:</p>
+        <ul>
+            <li ng-repeat="x in names | orderBy:'country'">
+                {{x.name + ', ' + x.country}}
+            </li>
+        </ul>
+        <h1>Price: {{price | currency}}</h1>
+        <ul>
+            <li ng-repeat="x in namess | filter :'i'">
+                {{x}}
+            </li>
+        </ul>
+        <p>Type a letter in the input field:</p>
+        <p><input type="text" ng-model="test"></p>
+        <ul>
+            <li ng-repeat="x in namess | filter:test">
+                {{x}}
+            </li>
+        </ul>
+        <table border="1" width = "100%">
+            <tr>
+                <th ng-click="orderByMe('name')">Name</th>
+                <th ng-click="orderByMe('country')">Country</th>
+            </tr>
+            <tr ng-repeat="x in names | orderBy:myOrderBy">
+                <th>{{x.name}}</th>
+                <th>{{x.country}}</th>
+            </tr>
+        </table>
+        <ul>
+            <li ng-repeat="x in namess">
+                {{x | upperOtherChar}}
+            </li>
+        </ul>
+    </div>
+    <script>
+        app = angular.module('myApp',[]);
+        app.controller('personCtrl', function($scope){
+            $scope.firstName = "Alan";
+            $scope.lastName = "Wang";
+            $scope.names = [
+                { name: 'Jani', country: 'Norway' },
+                { name: 'Carl', country: 'Sweden' },
+                { name: 'Margareth', country: 'England' },
+                { name: 'Hege', country: 'Norway' },
+                { name: 'Joe', country: 'Denmark' },
+                { name: 'Gustav', country: 'Sweden' },
+                { name: 'Birgit', country: 'Denmark' },
+                { name: 'Mary', country: 'England' },
+                { name: 'Kai', country: 'Norway' }
+            ];
+            $scope.price = 58;
+            $scope.namess = [
+                'Jani',
+                'Carl',
+                'Margareth',
+                'Hege',
+                'Joe',
+                'Gustav',
+                'Birgit',
+                'Mary',
+                'Kai'
+            ];
+            $scope.orderByMe = function(x){
+                $scope.myOrderBy = x;
+            }
+            
+        });
+        app.filter('upperOtherChar', function(){
+            return function(x){
+                var i, c, txt = "";
+                for (i = 0; i < x.length; i++){
+                    c = x[i];
+                    if (i % 2 == 0){
+                        c = c.toUpperCase();
+                    }
+                    txt += c;
+                }
+                return txt;
+            }
+        });
+    </script>
+</body>
+
+</html>

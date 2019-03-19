@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js">
+</script>
+<style>
+input.ng-invalid{
+    background-color: lightblue;
+}
+</style>
+<body>
+<form ng-app="" name="myForm" ng-init="myText = 'post@myweb.com'">
+    Email:
+    <input type="email" name="myAddress" ng-model="text">
+    <span ng-show="myForm.myAddress.$error.email">Not a valid e-mail address</span>
+    <p>Enter your e-mail address in the input field. AngularJS will display an errormessage if the address is not an e-mail.
+    <hr>
+    Email:
+    <input type="email" name="address" ng-model="myText">
+    <p>Edit the e-mail address, and try to change the status.</p>
+    <h1>Status</h1>
+    <p>Valid:{{myForm.address.$valid}} (if true, the value meets all criteria).</p>
+    <p>Dirty:{{myForm.address.$dirty}} (if true, the value has been changed).</p>
+    <p>Touched:{{myForm.address.$touched}} (if true, field has been in focus).</p>
+    <hr>
+    Enter your name: <input name="myName" ng-model="myText2" required>
+    <p>Edit the text field and it will get/lose classes according to the status.</p>
+    <p><b>Note:</b> A text field with the "required" attribute is not valid when it is empty.</p>
+</form>
+</body>
+</html>

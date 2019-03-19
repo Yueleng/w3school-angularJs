@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js">
+</script>
+
+<body>
+
+<div ng-app="myApp" ng-controller="personCtrl">
+    First Name: <input type="text" ng-model="firstName"><br>
+    Last Name: <input type="text" ng-model="lastName"><br>
+    <br>
+    Full Name: {{fullName()}}
+
+    <ul>
+        <li ng-repeat="x in names">
+            {{x.name + ', ' + x.country}}
+        </li>
+    </ul>
+</div>
+
+<!-- <div ng-app="app" ng-controller="namesCtrl"> -->
+    
+</div>
+
+<script>
+var app = angular.module('myApp', []);
+app.controller('personCtrl', function($scope){
+    $scope.firstName = "Alan";
+    $scope.lastName = "Wang";
+    $scope.fullName = function() {
+        return $scope.firstName + " " + $scope.lastName;
+    };
+    $scope.names = [
+        { name: 'Jani', country: 'Norway' },
+        { name: 'Hege', country: 'Sweden' },
+        { name: 'Kai', country: 'Denmark' }
+    ];
+});
+
+// angular.module('app',[]).controller('namesCtrl', function($scope){
+//     $scope.names = [
+//         { name: 'Jani', country: 'Norway' },
+//         { name: 'Hege', country: 'Sweden' },
+//         { name: 'Kai', country: 'Denmark' }
+//     ];
+// });
+</script>
+</body>
+
+</html>

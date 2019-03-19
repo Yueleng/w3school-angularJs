@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js">
+</script>
+
+<body>
+
+<div ng-app="myApp" ng-init="names=['Jani', 'Hege', 'Kai'];
+        namesArr=[{name:'Jani',country:'Norway'},{name:'Hege',country:'Sweden'},{name:'Kai',country:'Denmark'}]">
+    <p>Looping with ne-repeat:</p>
+    <ul>
+        <li ng-repeat="x in names">
+            {{x}}
+        </li>
+    </ul>
+
+    <ul>
+        <li ng-repeat="x in namesArr">
+            {{x.name + ', ' + x.country}}
+        </li>
+    </ul>
+
+    <hr>
+    <w3-test-directive></w3-test-directive>
+    <div w3-test-directive></div>
+    
+    <hr>
+    <div class="w3-test-directive2"></div>
+        <p>
+            <strong>Note:</strong> You must add the value "C" to the restrict property to be able to invoke the directive from a class name.
+        </p>
+    <hr>
+    <!-- directive: w3-test-directive3 -->
+    <p><strong>Note:</strong> We've added the <strong>replace</strong> property in this example, otherwise the comment would
+        be invisible.</p>
+    <p><strong>Note:</strong> You must add the value "M" to the <strong>restrict</strong> property to be able to invoke the
+        directive from a comment.</p>
+    <script>
+    var app = angular.module("myApp", []);
+    app.directive("w3TestDirective", function(){
+        return {
+            template: "<h1>Made by a directive!</h1>"
+        };
+    });
+    app.directive("w3TestDirective2", function(){
+        return {
+            restrict : "C",
+            template: "<h1>Made by a directive!</h1>"
+        };
+    });
+    app.directive("w3TestDirective3", function(){
+        return {
+            restrict: "M",
+            replace: true,
+            template: "<h1>Made by a directive!</h1>"
+        }
+    })
+    </script>
+
+    
+</div>
+
+</body>
+
+</html>
