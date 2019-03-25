@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js">
+</script>
+<style>
+table, th, td {
+    border: 1px solid grey;
+    border-collapse: collapse;
+    padding: 5px;
+}
+
+table tr:nth-child(odd){
+    background-color: #f1f1f1;
+}
+
+table tr:nth-child(even){
+    background-color:#ffffff;
+}
+
+</style>
+<body>
+    <div ng-app="myApp" ng-controller="myCtrl">
+        <p>Today's welcome message is:</p>
+        <h1>{{myWelcome}}</h1>
+        <p>The $http service requests a page on the server, and the response is set as the value of the "myWelcome" variable.</p>
+        <hr>
+        <p>Data: {{content}}</p>
+        <p>Status: {{statuscode}}</p>
+        <p>Statustext: {{statustext}}</p>
+        <hr>
+        <h1>{{content}}</h1>
+        <p>The $http service executes different functions on success and failure.</p>
+        <hr>
+        <ul>
+            <li ng-repeat="x in myData">
+                {{ x.Name + ', ' + x.Country}}
+            </li>
+        </ul>
+        <hr>
+        <table>
+            <tr ng-repeat="x in names">
+                <td>{{ x.Name }}</td>
+                <td>{{ x.Country }}</td>
+            </tr>
+        </table>
+        <hr>
+        <table>
+            <tr ng-repeat="x in names | orderBy : 'Country'">
+                <td>{{ $index + 1}}</td>
+                <td>{{x.Name}}</td>
+                <td>{{x.Country | uppercase}}</td>
+            </tr>
+        </table>
+        <hr>
+    </div>
+
+    
+</body>
+<script>
+    var app = angular.module('myApp', []);
+    app.controller('myCtrl', function ($scope, $http) {
+        $http({
+            method: "GET",
+            url: "welcome.htm"
+        }).then(function mySucess(response) {
+            $scope.myWelcome = response.data;
+        }, function myError(response) {
+            $scope.myWelcome = response.statusText;
+        });
+
+        $http.get("welcome.htm")
+            .then(function (response) {
+                $scope.content = response.data;
+                $scope.statuscode = response.status;
+                $scope.statustext = response.statusText;
+            });
+
+        $http.get("wrongfilename.htm")
+            .then(function (response) {
+                $scope.content = response.data;
+            }, function (response) {
+                $scope.content = "Something went wrong";
+            });
+
+        $http.get("https://www.w3schools.com/angular/customers.php")
+            .then(function (response) {
+                $scope.myData = response.data.records;
+            });
+
+        $http.get("https://www.w3schools.com/angular/customers.php")
+            .then(function (response) {
+                $scope.names = response.data.records;
+            });
+        
+    });
+</script>
+</html>
