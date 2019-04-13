@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<style>
+input.css.ng-invalid {
+    background-color:pink;
+}
+input.css.ng-valid {
+    background-color:lightgreen;
+}
+
+form[name="myFormCss"].ng-pristine {
+    background-color: blueviolet;
+}
+
+form[name="myFormCss"].ng-dirty {
+    background-color: blue;
+}
+</style>
+<body ng-app="myApp">
+    <p>Try writing in the input field:</p>
+    <form name="myForm">
+        <input name="myInput" ng-model="myInput" required>
+    </form>
+    <p>The input's valid state is:</p>
+    <h1>{{myForm.myInput.$valid}}</h1>
+    <hr>
+    <p>Try writing an E-mail address in the input field:</p>
+    <form name="myFormEmail">
+        <input type="email" name="myInput" ng-model="myInput">
+    </form>
+    <p>The input's valid state is:</p>
+    <h1>{{myFormEmail.myInput.$valid}}</h1>
+    <p>
+        Note that the state of the input field is "true" before you start writing in it, even
+        if it does not contain an email address.
+    </p>
+    <hr>
+    <p>Try leaving the first input field blank:</p>
+    <form name="myFormState">
+        <p>Name:
+            <input name="myName" ng-model="myName" required>
+            <span ng-show="myFormState.myName.$touched && myFormState.myName.$invalid">The name is required.</span>
+        </p>
+        <p>Address:
+            <input name="myAddress" ng-model="myAddress" required>
+        </p>
+    </form>
+    <p>We use the ng-show directive to only show the error message if the field has been touched AND is empty.</p>
+    <hr>
+
+    
+    <p>Try writing in the input field:</p>
+    
+    <form name="myFormCss">
+        <input class="css" name="myName" ng-model="myNameCss" required>
+        <p>The input field requires content, and will therefore become green when you write in it.</p>
+        <p>The form gets a "ng-dirty" class when the form has been modified, and will therefore turn blue</p>
+    </form>
+    
+    <hr>
+    <p>Try writing in the input field</p>
+
+    <form name="myFormCustom">
+        <input name="myInput" ng-model="myInputCustom" required my-directive>
+    </form>
+    <p>The input's valid state is:</p>
+    <h1>{{myFormCustom.myInput.$valid}}</h1>
+    <p>In HTML, the new directive will be referred to by using the attribute my-directive.</p>
+    <p>In the JavaScript we start by adding a new directive named myDirective.</p>
+    <p>Remember when naming a directive, you must use a camel case name, myDirective, but when invoking it, you must use - separated name, my-directive</p>
+    <p>Then, return an object where you specify that we require ngModel, which is the ngModelController</p>
+    <p>Make a linking function which takes some arguments, where the fourth argument, mCtrl, is the ngModelController,</p>
+    <p>Then specify a function, in this case myValidation, which takes one argument, this argument is the value of the input element.</p>
+    <p>Test if the value contains the letter "e", and set the validity of the model controller to either true or false.</p>
+    <p>At last, mCtrl.$parsers.push(myValidation); will add the myValidation function to an array of other functions, which will be executed every time the input value changes</p>
+    <hr>
+    <h2>Validation Example</h2>
+    <form ng-controller="validateCtrl" name="myFormValidation" novalidate>
+        <p>Username:<br>
+            <input type="text" name="user" ng-model="user" required>
+            <span style="color:red" ng-show="myFormValidation.user.$dirty && myFormValidation.user.$invalid">
+                <span ng-show="myFormValidation.user.$error.required">Username is required.</span>
+            </span>
+        </p>
+
+        <p>Email:<br>
+            <input type="email" name="email" ng-model="email" required>
+            <span style="color:red" ng-show="myFormValidation.email.$dirty && myFormValidation.email.$invalid">
+                <span ng-show="myFormValidation.email.$error.required">Email is required.</span>
+                <span ng-show="myFormValidation.email.$error.email">Invalid email address.</span>
+            </span>
+        </p>
+
+        <p>
+            <input type="submit" 
+                   ng-disabled="myFormValidation.user.$dirty && myFormValidation.user.$invalid ||
+                                myFormValidation.email.$dirty && myFormValidation.email.$invalid">
+        </p>
+                
+    </form>
+
+<script>
+var app = angular.module('myApp', []);
+app.directive('myDirective', function(){
+    return {
+        require: 'ng-model',
+        link: function(scope, element, attr, mCtrl){
+            function myValidation(value){
+                if (value.indexOf("e") > -1){
+                    mCtrl.$setValidity('charE', true);
+                } else {
+                    mCtrl.$setValidity('charE', false);
+                }
+                return value; // AW: Why we need this?
+            }
+            mCtrl.$parsers.push(myValidation);
+        }
+    };
+});
+
+app.controller('validateCtrl', function($scope) {
+    $scope.user = 'Alan Wang';
+    $scope.email = 'alan.wang@korahlimited.com';
+});
+</script>
+</body>
+</html>

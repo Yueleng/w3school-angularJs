@@ -6,11 +6,42 @@
     <div ng-app="myApp" ng-controller="myCtrl">
         <h1 ng-mousemove="count = count + 1">Mouse Over Me!</h1>
         <h2>{{ count }}</h2>
+        <hr>
+        <button ng-click="counts = counts + 1">Click Me!</button>
+        <p>{{ counts }}</p>
+        <hr>
+        <button ng-click="myFunction()">Click Me! Trigger functions.</button>
+        <p>{{ countss }}</p>
+        <hr>
+        <button ng-click="showHide()">Toggle Text</button>
+        <div ng-show="showMe">
+            <h1>Menu:</h1>
+            <div>Pizza</div>
+            <div>Pasta</div>
+            <div>Pesce</div>
+        </div>
+        <p>Click the button to show/hide the menu.</p>
+        <hr>
+        <h1 ng-mousemove="myFunc($event)">Mouse Over Me! Show Coordinates</h1>
+        <p>Coordinates: {{x + ', '+  y}}</p>
+        <hr>
     </div>
     <script>
         var app = angular.module('myApp',[]);
-        app.controller('myCtrl', function($scope) {
+        app.controller('myCtrl', function($scope) { 
             $scope.count = 0;
+            $scope.counts = 0;
+            $scope.countss = 0;
+            $scope.myFunction = function(){
+                $scope.countss++;
+            }
+            $scope.showHide = function(){
+                $scope.showMe = !$scope.showMe;
+            }
+            $scope.myFunc = function(event){
+                $scope.x = event.clientX;
+                $scope.y = event.clientY;
+            }
         });
     </script>
 </body>
